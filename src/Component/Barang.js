@@ -34,7 +34,7 @@ const Barang = () => {
         <Header />
         <div className="container mt-3" style={{marginBottom:"100px"}}>
             <h1>Barang</h1>
-            <Link to={"/addBarang"} className="btn btn-primary btn-sm mb-4" style={{float:"right"}}>Add Data</Link>
+            <Link to={"/barang/add"} className="btn btn-primary btn-sm mb-4" style={{float:"right"}}>Add Data</Link>
             <table className="table">
                 <thead>
                     <tr>
@@ -51,7 +51,7 @@ const Barang = () => {
                             <tr>
                                 <td>{index + 1}</td>
                                 <td>{row.title}</td>
-                                <td>{row.deskripsi}</td>
+                                <td>{row.description}</td>
                             </tr>)
                         }) : <tr>
                             <td colSpan={"3"} style={{textAlign:"center"}}>Data tidak ada</td>

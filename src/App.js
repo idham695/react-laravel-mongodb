@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import AuthContext from './Context/AuthContext';
 import Dashboard from './Component/Dashboard';
 import Barang from './Component/Barang';
+import FormBarang from './Component/FormBarang';
 import NotFound from './Component/NotFound';
 import { Route, Routes, Navigate, redirect } from 'react-router-dom';
 
@@ -51,6 +52,7 @@ function App() {
         <Routes>
           <Route path="/" element={token ? <Dashboard /> : <Navigate to="/login" /> }></Route>
           <Route path="/barang" element={token ? <Barang /> : <Navigate to="/login" />  }></Route>
+          <Route path="/barang/add" element={token ? <FormBarang /> : <Navigate to="/login" />  }></Route>
 
           <Route path="/login" element={token ? <Navigate to="/" /> : <Login handleLogin={ onHandleLogin } /> }></Route>
           <Route path="*" element=<NotFound />></Route>
