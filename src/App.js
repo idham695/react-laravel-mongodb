@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import AuthContext from './Context/AuthContext';
 import Dashboard from './Component/Dashboard';
 import Barang from './Component/Barang';
+import NotFound from './Component/NotFound';
 import { Route, Routes, Navigate, redirect } from 'react-router-dom';
 
 const loginUser = async (data) => {
@@ -32,7 +33,7 @@ function App() {
   const refreshToken = async () => {
     setLoading(true);
     const getToken = window.localStorage.getItem("token");
-    if (!getToken) return setLoading(false);  redirect('/login');
+    if (!getToken) return setLoading(false); setToken('');  redirect('/login');
     window.localStorage.setItem("token", getToken);
     setToken(getToken);
     setLoading(false);
@@ -52,6 +53,7 @@ function App() {
           <Route path="/barang" element={token ? <Barang /> : <Navigate to="/login" />  }></Route>
 
           <Route path="/login" element={token ? <Navigate to="/" /> : <Login handleLogin={ onHandleLogin } /> }></Route>
+          <Route path="*" element=<NotFound />></Route>
         </Routes>
       </div>
     </AuthContext.Provider>
