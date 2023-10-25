@@ -8,7 +8,7 @@ import Dashboard from './Component/Dashboard';
 import Barang from './Component/Barang';
 import FormBarang from './Component/FormBarang';
 import NotFound from './Component/NotFound';
-import { Route, Routes, Navigate, redirect } from 'react-router-dom';
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
 
 const loginUser = async (data) => {
   let response = await axios.post('http://localhost:3200/api/login', {
@@ -22,6 +22,7 @@ function App() {
   // app
   const [token, setToken] = useState();
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const onHandleLogin = async (email, password) => {
     const login = await loginUser({
@@ -34,7 +35,7 @@ function App() {
   const refreshToken = async () => {
     setLoading(true);
     const getToken = window.localStorage.getItem("token");
-    if (!getToken) return setLoading(false); setToken('');  redirect('/login');
+    if (!getToken) return setLoading(false); setToken('');  navigate('/login');
     window.localStorage.setItem("token", getToken);
     setToken(getToken);
     setLoading(false);
@@ -42,7 +43,7 @@ function App() {
 
   useEffect(() => {
     refreshToken();
-  })
+  }, [])
 
   return (
     <>
@@ -52,7 +53,8 @@ function App() {
         <Routes>
           <Route path="/" element={token ? <Dashboard /> : <Navigate to="/login" /> }></Route>
           <Route path="/barang" element={token ? <Barang /> : <Navigate to="/login" />  }></Route>
-          <Route path="/barang/add" element={token ? <FormBarang /> : <Navigate to="/login" />  }></Route>
+          <Route path="/barang/add" element={token ? <FormBarang action="add" /> : <Navigate to="/login" />  }></Route>
+          <Route path="/barang/edit/:id" element={token ? <FormBarang action="edit"  /> : <Navigate to="/login" />  }></Route>
 
           <Route path="/login" element={token ? <Navigate to="/" /> : <Login handleLogin={ onHandleLogin } /> }></Route>
           <Route path="*" element=<NotFound />></Route>

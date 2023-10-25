@@ -1,14 +1,16 @@
-import { Link, redirect } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 
 const Header = () => {
   const [setToken] = useState();
+
+  const navigate = useNavigate();
   
   const handleLogout = () => {
     localStorage.removeItem('token');
     setToken('');
-    redirect('/login');
+    return navigate('/login');
   };
   
   return (
