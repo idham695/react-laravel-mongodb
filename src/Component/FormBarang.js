@@ -7,6 +7,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 const FormBarang = (data) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
+    const [file, setFile] = useState(null);
     const [token, setToken] = useState(localStorage.getItem('token'));
     const navigate = useNavigate();
     let { id } = useParams();
@@ -72,6 +73,27 @@ const FormBarang = (data) => {
         }
     }
 
+
+    const handleChangeFile = (e) => {
+        let uploadFile = e.target.files[0];
+        
+        if (uploadFile.type !== 'image/png') {
+            alert('Hanya Dapat Upload Type PNG');
+        }
+
+        const img = new Image();
+
+        img.onload = () => {
+            const width = img.width;
+            const height = img.height;
+
+            console.log(`Image width: ${width}px, height: ${height}px`);
+        };
+
+        img.src = URL.createObjectURL(uploadFile);
+    }
+    
+
     useEffect(() => {
         if(data.action === 'edit') getDataById(id);
     }, []);
@@ -92,6 +114,10 @@ const FormBarang = (data) => {
             <div className="row">
                 <div className="col-md-4">Title</div>
                 <div className="col-md-8"><input type="text" className="form-control" name="email" id="email" value={title} onChange={(e) => setTitle(e.target.value)} required  /></div>
+            </div>
+            <div className="row mt-3">
+                <div className="col-md-4">File</div>
+                <div className="col-md-8"><input type="file" className="form-control" name="file" id="file" accept="image/png" onChange={handleChangeFile}  required  /></div>
             </div>
             <div className="row mt-3">
                 <div className="col-md-4">Description</div>

@@ -79,7 +79,7 @@ const Barang = () => {
                             </tr>
                             )
                         }) : <tr>
-                            <td colSpan={"3"} style={{textAlign:"center"}}>Data tidak ada</td>
+                            <td colSpan={"4"} style={{textAlign:"center"}}>Data tidak ada</td>
                         </tr>
                     }
                 </tbody>
